@@ -1,13 +1,111 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="min-h-screen bg-zinc-950 text-zinc-100 font-sans p-4 md:p-8 selection:bg-emerald-500/30">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header Section -->
+        <header class="mb-12 flex items-center gap-4">
+            <div class="p-3 bg-emerald-500/10 rounded-2xl border border-emerald-500/20">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-emerald-400">
+                    <rect width="8" height="4" x="8" y="2" rx="1" ry="1"/>
+                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                    <path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/>
+                </svg>
+            </div>
+            <div>
+                <h1 class="text-4xl font-bold tracking-tight text-white">Todo List</h1>
+                <p class="text-zinc-400 text-sm">Gestiona tus tareas diarias con precisión</p>
+            </div>
+        </header>
 
+        <!-- Input Section -->
+        <section class="mb-12 bg-zinc-900/50 p-6 rounded-3xl border border-zinc-800 shadow-2xl shadow-black/50">
+            <label for="new-task" class="block text-sm font-medium text-zinc-400 mb-2 ml-1">
+                Nueva tarea
+            </label>
+            <div class="flex gap-3">
+                <input
+                    id="new-task"
+                    type="text"
+                    placeholder="Ej. Comprar pan..."
+                    class="flex-1 bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-zinc-100 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all placeholder:text-zinc-500"
+                />
+                <button
+                    id="add-btn"
+                    class="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 transition-all active:scale-95 shadow-lg shadow-emerald-900/20"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                        <path d="M5 12h14"/><path d="M12 5v14"/>
+                    </svg>
+                    <span class="hidden sm:inline">Agregar</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Summary Sidebar -->
+            <aside class="lg:col-span-3 space-y-4">
+                <div class="bg-zinc-900/50 p-6 rounded-3xl border border-zinc-800">
+                    <div class="mb-6">
+                        <p class="text-zinc-500 text-xs uppercase tracking-widest font-bold mb-1">Total</p>
+                        <p id="total-tasks" class="text-4xl font-mono text-white">0</p>
+                    </div>
+                    <div>
+                        <p class="text-zinc-500 text-xs uppercase tracking-widest font-bold mb-1">Realizadas</p>
+                        <p id="completed-tasks" class="text-4xl font-mono text-emerald-400">0</p>
+                    </div>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="bg-zinc-900/50 p-4 rounded-2xl border border-zinc-800">
+                    <div class="flex justify-between text-xs mb-2 text-zinc-400 font-bold uppercase tracking-tighter">
+                        <span>Progreso</span>
+                        <span id="progress-text">0%</span>
+                    </div>
+                    <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                        <div 
+                           id="progress-bar"
+                           class="h-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] transition-all duration-300"
+                           style="width: 0%"
+                        ></div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Tasks List -->
+            <main class="lg:col-span-9">
+                <div class="bg-zinc-900/50 rounded-3xl border border-zinc-800 overflow-hidden">
+                    <div class="grid grid-cols-[80px_1fr_100px] gap-4 p-4 border-b border-zinc-800 bg-zinc-800/30 text-xs font-bold uppercase tracking-widest text-zinc-500">
+                        <div class="pl-2">ID</div>
+                        <div>Tarea</div>
+                        <div class="text-center">Acciones</div>
+                    </div>
+
+                    <div id="tasks-container" class="divide-y divide-zinc-800/50">
+                        <!-- Las tareas se generarán dinámicamente aquí -->
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Footer / Info -->
+        <footer class="mt-12 pt-8 border-t border-zinc-900 text-center">
+            <p class="text-zinc-600 text-xs font-mono">
+                &copy; Desafío 5 &bull; Todo List en Vanilla JS
+            </p>
+        </footer>
+    </div>
+
+    <!-- Script Application -->
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
